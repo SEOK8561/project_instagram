@@ -34,7 +34,7 @@ public class Images {
 	
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name="image_id")
-	private List<Tags> tags;
+	private List<Tags> tag;
 	
 	private Timestamp create_Date;
 	private Timestamp update_Date;
