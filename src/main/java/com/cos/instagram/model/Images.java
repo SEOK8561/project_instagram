@@ -1,41 +1,58 @@
 package com.cos.instagram.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Images {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Lob
-	@Column(length=1024000)
-	private byte[] file;
 	private String location;
 	private String caption;
+	private String mimeType;
+	private String fileName;
+	private String filePath;
+	
+//	@Lob
+//	@Column(length=1024000)
+//	private byte[] file;
 	
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="userId")
+	@JsonIgnoreProperties({"username", "name", "website", "bio", "email", "phone", "gender", "createDate", "updateDate"})
 	private Users user;
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name="image_id")
-	private List<Tags> tag;
+	@OneToMany(mappedBy = "image")
+	@JsonManagedReference
+	@Builder.Default private List<Tags> tags = new ArrayList<>();
 	
-	private Timestamp create_Date;
-	private Timestamp update_Date;
+	
+	@CreationTimestamp
+	private LocalDate createDate;
+	@CreationTimestamp
+	private LocalDate updateDate;
 }

@@ -1,18 +1,24 @@
 package com.cos.instagram.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@AllArgsConstructor		//모든 필드가 있는 생성자를 생성함
+@NoArgsConstructor
+@Builder
 public class Users {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,16 +30,15 @@ public class Users {
 	private String email;
 	private String phone;
 	private String gender;
-	@Lob
-	private byte[] profile;
 	
 	//@OneToMany(mappedBy="") 
 	//private Follow from_user_id;
 	
 	//@OneToMany(mappedBy="") 
 	//private Follow to_user_id;
-	
 		
-	private Timestamp create_Date;
-	private Timestamp update_Date;
+	@CreationTimestamp
+	private LocalDate createDate;
+	@CreationTimestamp
+	private LocalDate updateDate;
 }

@@ -1,6 +1,6 @@
 package com.cos.instagram.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Data;
 
@@ -19,13 +21,15 @@ public class Follow {
 	private int id;
 	
 	@ManyToOne
-	@JoinColumn(name="from_user")	//DB에 들어갈 FK이름
-	private Users from_user;
+	@JoinColumn(name="fromUser")	//DB에 들어갈 FK이름
+	private Users fromUser;
 	
 	@ManyToOne
-	@JoinColumn(name="to_user")		//FK 변수명(마음대로)
-	private Users to_user;
+	@JoinColumn(name="toUser")		//FK 변수명(마음대로)
+	private Users toUser;
 	
-	private Timestamp create_Date;
-	private Timestamp update_Date;
+	@CreationTimestamp
+	private LocalDate createDate;
+	@CreationTimestamp
+	private LocalDate updateDate;
 }
