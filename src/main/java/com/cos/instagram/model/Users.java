@@ -24,6 +24,7 @@ public class Users {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String username;	//유저 아이디
+	private String password;
 	private String name;		//실명
 	private String website;
 	private String bio;
